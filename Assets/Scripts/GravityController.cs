@@ -43,8 +43,8 @@ public class GravityController : MonoBehaviour
     }*/
     
     
-
-
+#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBGL
+  //#if UNITY_STANDALONE || UNITY_WEBGL
     private void Update()
     {
         Vector3 vector = Vector3.zero;
@@ -93,5 +93,39 @@ public class GravityController : MonoBehaviour
         Physics.gravity = vector.normalized * (gravity * gravityScale);
     }
     */
+    #endif
     
+    /*#if UNITY_ANDROID || UNITY_IOS
+    
+    private void Start()
+    {
+        // Sensors are disabled by default; ensure Accelerometer is enabled before reading
+        if (Accelerometer.current != null)
+        {
+            InputSystem.EnableDevice(Accelerometer.current);
+        }
+    }
+    
+    private void Update()
+    {
+        // Check if Accelerometer hardware is present
+        if (Accelerometer.current == null) 
+            return;
+
+        // Read the current 3D acceleration vector
+        Vector3 rawAcceleration = Accelerometer.current.acceleration.ReadValue();
+
+        // Remap to match your original legacy axes
+        Vector3 vector = new Vector3
+        {
+            x = rawAcceleration.x,
+            z = rawAcceleration.z,
+            y = rawAcceleration.y
+        };
+
+        // Apply updated gravity
+        Physics.gravity = vector.normalized * (gravity * gravityScale);
+    }
+
+    #endif*/
 }
